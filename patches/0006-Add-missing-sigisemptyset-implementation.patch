@@ -1,0 +1,32 @@
+From 2b383c89a8021b6ff0983f706e54e0ff7de4c803 Mon Sep 17 00:00:00 2001
+From: topjohnwu <topjohnwu@gmail.com>
+Date: Sun, 14 Jul 2024 16:55:01 -0700
+Subject: [PATCH 06/18] Add missing sigisemptyset implementation
+
+---
+ shell/hush.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/shell/hush.c b/shell/hush.c
+index d111f0cc5..5fbceaae3 100644
+--- a/shell/hush.c
++++ b/shell/hush.c
+@@ -1942,6 +1942,15 @@ enum {
+ 		,
+ };
+ 
++#ifdef __BIONIC__
++static int sigisemptyset(const sigset_t *set)
++{
++    sigset_t empty;
++    sigemptyset(&empty);
++    return memcmp(&empty, set, sizeof(sigset_t)) == 0;
++}
++#endif
++
+ static void record_pending_signo(int sig)
+ {
+ 	sigaddset(&G.pending_set, sig);
+-- 
+2.46.0
+
