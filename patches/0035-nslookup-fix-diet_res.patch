@@ -1,0 +1,10 @@
+diff --git a/networking/nslookup.c b/networking/nslookup.c
+index abcdef1..1234567 100644
+--- a/networking/nslookup.c
++++ b/networking/nslookup.c
+@@ -19,6 +19,8 @@
+ #include <arpa/inet.h>
+ #include <netdb.h>
+ #include <resolv.h>
++
++#define _diet_res _res
